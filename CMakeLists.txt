@@ -304,6 +304,12 @@ add_executable(uhdm-dump ${PROJECT_SOURCE_DIR}/util/uhdm-dump.cpp)
 target_link_libraries(uhdm-dump PRIVATE uhdm)
 add_executable(uhdm-hier ${PROJECT_SOURCE_DIR}/util/uhdm-hier.cpp)
 target_link_libraries(uhdm-hier PRIVATE uhdm)
+find_package(FLEX)
+find_package(BISON)
+flex_target(parser ${PROJECT_SOURCE_DIR}/util/uhdm_lexer.l build/generated/uhdm_lexer.c)
+bison_target(parser ${PROJECT_SOURCE_DIR}/util/uhdm_parse.y generated/uhdm.tab.c COMPILE_FLAGS "-v -b uhdm")
+add_executable(uhdm-load ${PROJECT_SOURCE_DIR}/util/uhdm-load.cpp generated/uhdm.tab.c generated/uhdm_lexer.c)
+target_link_libraries(uhdm-load PRIVATE uhdm)
 
 # Installation tester
 add_executable(test_inst EXCLUDE_FROM_ALL ${PROJECT_SOURCE_DIR}/util/uhdm-dump.cpp)

@@ -3,6 +3,8 @@ __pycache__
 .vs
 .vscode
 *.user
+*.uhdm
+*.dmp
 
 # Build directories
 build
