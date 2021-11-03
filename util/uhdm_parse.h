@@ -7,17 +7,20 @@
 extern "C" {
 #endif
 
-typedef enum kind { UNKNOWN, REF_OBJ, EV_OBJ, MOD_OBJ, CST_OBJ, ASGN_OBJ, BGN_OBJ, PKG_OBJ, ALWYS_OBJ, TOP_OBJ } kind_e;
-typedef enum vtyp { VUNKNOWN, DEF_NAME, NAME, FULL_NAME, TOP_MOD, PROC, ALL_PACK, ALL_MOD, DESIGN, ALWAYS, STMT, COND, LHS, RHS, CST } typ_e;
+typedef enum kind { UNKNOWN, REF_OBJ, EV_OBJ, MOD_OBJ, CST_OBJ, ASGN_OBJ, BGN_OBJ, PKG_OBJ, ALWYS_OBJ, INIT_OBJ, DLY_OBJ, FUNC_OBJ, TOP_OBJ } kind_e;
+typedef enum vtyp { VUNKNOWN, DEF_NAME, NAME, FULL_NAME, TOP_MOD, PROC, ALL_PACK, ALL_MOD, ONE_MOD, DESIGN, ALWAYS, STMT, COND, LHS, RHS, CST, STRCST, HASH, INST, TASKF, SIZ } typ_e;
 typedef struct cast_obj { enum kind typ; } cast_obj;
 typedef struct vpi_obj { enum vtyp typ; struct cast_obj *ptr; int cst; } vpi_obj;
 typedef struct attr_list { enum kind typ; struct vpi_obj *itm; struct attr_list *nxt; } attr_list;
 typedef struct ref_object { enum kind typ; char *id; attr_list *attr; } ref_object;
 typedef struct event_object { enum kind typ; attr_list *attr; } event_object;
+typedef struct delay_object { enum kind typ; attr_list *attr; } delay_object;
 typedef struct cst_object { enum kind typ; attr_list *attr; } cst_object;
 typedef struct always_object { enum kind typ; attr_list *attr; } always_object;
+typedef struct initial_object { enum kind typ; attr_list *attr; } initial_object;
 typedef struct bgn_object { enum kind typ; attr_list *attr; } bgn_object;
-typedef struct pkg_object { enum kind typ; char *id1, *id2; } pkg_object;
+typedef struct pkg_object { enum kind typ; char *id1, *id2; attr_list *attr; } pkg_object;
+typedef struct func_object { enum kind typ; char *id; attr_list *attr; } func_object;
 typedef struct asgn_object { enum kind typ; attr_list *attr; } asgn_object;
 typedef struct module_object { enum kind typ; char *id1, *id2, *id3, *id4, *id5; int lin; void *par; attr_list *attr; } module_object;
 typedef struct top_object { enum kind typ; vpi_obj *vtop; attr_list *attr; } top_object;

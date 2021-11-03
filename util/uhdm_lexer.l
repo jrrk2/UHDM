@@ -73,13 +73,17 @@ return code;
 "/*"			{ comment(); }
 "//"[^\n]*              { /* consume //-comment */ }
 
-"INT"    { count(); return ( logging (INT) ); }
+"INT"       { count(); return ( logging (INT) ); }
+"STRING:"[^\n]*    { count(); return ( logging (STRING) ); }
 "always"    { count(); return ( logging (always) ); }
 "assignment"    { count(); return ( logging (assignment) ); }
 "begin"    { count(); return ( logging (begin) ); }
 "constant"    { count(); return ( logging (constant) ); }
 "design"    { count(); return ( logging (design) ); }
+"delay_control"    { count(); return ( logging (delay_control) ); }
 "event_control"    { count(); return ( logging (event_control) ); }
+"function"    { count(); return ( logging (function) ); }
+"initial"    { count(); return ( logging (initial) ); }
 "module"    { count(); return ( logging (module) ); }
 "package"    { count(); return ( logging (package) ); }
 "parent"    { count(); return ( logging (parent) ); }
@@ -91,11 +95,15 @@ return code;
 "vpiCondition"    { count(); return ( logging (vpiCondition) ); }
 "vpiDefName"    { count(); return ( logging (vpiDefName) ); }
 "vpiFullName"    { count(); return ( logging (vpiFullName) ); }
+"vpiInstance"    { count(); return ( logging (vpiInstance) ); }
 "vpiLhs"    { count(); return ( logging (vpiLhs) ); }
+"vpiModule"    { count(); return ( logging (vpiModule) ); }
 "vpiName"    { count(); return ( logging (vpiName) ); }
 "vpiProcess"    { count(); return ( logging (vpiProcess) ); }
 "vpiRhs"    { count(); return ( logging (vpiRhs) ); }
+"vpiSize"    { count(); return ( logging (vpiSize) ); }
 "vpiStmt"    { count(); return ( logging (vpiStmt) ); }
+"vpiTaskFunc"    { count(); return ( logging (vpiTaskFunc) ); }
 "vpiTopModule"    { count(); return ( logging (vpiTopModule) ); }
 
 {L}({L}|{D})*		{ count(); return( logging ( ID) ); }
@@ -139,6 +147,7 @@ L?\"(\\.|[^\\"\n])*\"	{ count(); return( logging ( STRING_LITERAL) ); }
 "^"			{ count(); return( logging ( '^') ); }
 "|"			{ count(); return( logging ( '|') ); }
 "?"			{ count(); return( logging ( '?') ); }
+"#"			{ count(); return( logging ( '#') ); }
 
 "\n"[" "]*		{ int col, oldcol2 = oldcol; count(); col = strlen(yytext); oldcol = col; if (verbose_mode > 1) printf("\n%d:%d\n", oldcol2, col);
                           return logging ( oldcol2 == col ? NL : oldcol2 < col ? START : END ); }

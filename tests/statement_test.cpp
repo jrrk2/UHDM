@@ -103,7 +103,7 @@ TEST(Serialization, SerializeStatementDesign_e2e) {
 
   const std::string orig = visit_designs(designs);
 
-  const std::string filename = testing::TempDir() + "/serialize-roundrip.uhdm";
+  const std::string filename = "statement.uhdm";
   serializer.Save(filename);
 
   const std::vector<vpiHandle>& restoredDesigns = serializer.Restore(filename);

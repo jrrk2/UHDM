@@ -138,7 +138,7 @@ TEST(Serialization, SerializeModulePortDesign_e2e) {
 
   const std::string orig = visit_designs(designs);
 
-  const std::string filename = testing::TempDir() + "/serialize-roundrip.uhdm";
+  const std::string filename = "serialize-roundrip.uhdm";
   serializer.Save(filename);
 
   const std::vector<vpiHandle>& restoredDesigns = serializer.Restore(filename);
